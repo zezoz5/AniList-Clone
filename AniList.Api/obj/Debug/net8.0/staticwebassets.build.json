@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "VEDeUR0G7waQcdZmgdq5CHFc/ai22d4WDDr5R6yo9Eg=",
+  "Source": "AniList.Api",
+  "BasePath": "_content/AniList.Api",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
