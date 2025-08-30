@@ -13,7 +13,7 @@ namespace AniList.Api.Mapping
         public MappingProfile()
         {
             CreateMap<Anime, AnimeDto>();
-            CreateMap<AddAnimeDto, Anime>();
+            CreateMap<CreateAnimeDto, Anime>();
         }
     }
 }

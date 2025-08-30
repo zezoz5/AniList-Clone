@@ -10,10 +10,11 @@ namespace AniList.Api.Interfaces
 {
     public interface IAnimeRepository
     {
-        public Task<IEnumerable<AnimeDto>> GetAllAsync();
-        public Task<AnimeDto?> GetByIdAsync(int Id);
-        public Task<AnimeDto> AddAnimeAsync(AddAnimeDto animeDto);
-        public Task<AnimeDto?> UpdateAnimeAsync(int Id, AddAnimeDto animeDto);
-        public Task<AnimeDto?> DeleteAnimeAsync(int Id);
+        public Task<List<Anime>> GetAllAsync();
+        public Task<Anime?> GetByIdAsync(int Id);
+        public Task<Anime> CreateAnimeAsync(Anime anime);
+        public Task<bool> UpdateAnimeAsync(Anime anime);
+        public Task<bool> DeleteAnimeAsync(int Id);
+        public Task<bool> ExistAsync(int Id);
     }
 }

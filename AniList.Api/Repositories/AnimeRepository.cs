@@ -15,55 +15,48 @@ namespace AniList.Api.Repositories
     public class AnimeRepository : IAnimeRepository
     {
         private readonly AppDbContext _context;
-        private readonly IMapper _mapper;
 
-        public AnimeRepository(AppDbContext context, IMapper mapper)
+        public AnimeRepository(AppDbContext context)
         {
             _context = context;
-            _mapper = mapper;
         }
 
-        public async Task<IEnumerable<AnimeDto>> GetAllAsync()
+        public async Task<List<Anime>> GetAllAsync()
         {
             var animeList = await _context.Animes.ToListAsync();
-            return _mapper.Map<List<AnimeDto>>(animeList);
-
+            return animeList;
         }
-
-        public async Task<AnimeDto?> GetByIdAsync(int Id)
+        public async Task<Anime?> GetByIdAsync(int Id)
         {
             var anime = await _context.Animes.FindAsync(Id);
-
-            return _mapper.Map<AnimeDto>(anime);
+            return anime;
         }
-
-        public async Task<AnimeDto> AddAnimeAsync(AddAnimeDto animeDto)
+        public async Task<Anime> CreateAnimeAsync(Anime anime)
         {
-            var anime = _mapper.Map<Anime>(animeDto);
             await _context.Animes.AddAsync(anime);
             await _context.SaveChangesAsync();
-            return _mapper.Map<AnimeDto>(anime);
+            return anime;
         }
 
-        public async Task<AnimeDto?> UpdateAnimeAsync(int Id, AddAnimeDto updatedAnime)
+        public async Task<bool> UpdateAnimeAsync(Anime anime)
         {
-            var anime = _mapper.Map<Anime>(updatedAnime);
-            anime.Id = Id;
-
             _context.Animes.Update(anime);
             await _context.SaveChangesAsync();
-
-            var animeDto = _mapper.Map<AnimeDto>(anime);
-
-            return animeDto;
+            return true;
         }
 
-        public async Task<AnimeDto?> DeleteAnimeAsync(int Id)
+        public async Task<bool> DeleteAnimeAsync(int Id)
         {
             var anime = await _context.Animes.FindAsync(Id);
+            if (anime == null) return false;
             _context.Animes.Remove(anime);
             await _context.SaveChangesAsync();
-            return _mapper.Map<AnimeDto>(anime);
+            return true;
+        }
+
+        public async Task<bool> ExistAsync(int Id)
+        {
+            return await _context.Animes.AnyAsync(x => x.Id == Id);
         }
     }
 }

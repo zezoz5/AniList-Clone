@@ -144,3 +144,4 @@ D:\anilist-clone\AniList.Api\obj\Debug\net8.0\AniList.Api.genruntimeconfig.cache
 D:\anilist-clone\AniList.Api\obj\Debug\net8.0\ref\AniList.Api.dll
 D:\anilist-clone\AniList.Api\bin\Debug\net8.0\AutoMapper.dll
 D:\anilist-clone\AniList.Api\bin\Debug\net8.0\AutoMapper.Extensions.Microsoft.DependencyInjection.dll
+D:\anilist-clone\AniList.Api\obj\Debug\net8.0\AniList.Api.sourcelink.json
