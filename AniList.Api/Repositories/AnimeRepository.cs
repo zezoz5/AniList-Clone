@@ -1,13 +1,6 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AniList.Api.data;
-using AniList.Api.DTOs;
 using AniList.Api.Interfaces;
 using AniList.Api.Models;
-using AutoMapper;
 using Microsoft.EntityFrameworkCore;
 
 namespace AniList.Api.Repositories
@@ -26,9 +19,9 @@ namespace AniList.Api.Repositories
             var animeList = await _context.Animes.ToListAsync();
             return animeList;
         }
-        public async Task<Anime?> GetByIdAsync(int Id)
+        public async Task<Anime?> GetByIdAsync(int id)
         {
-            var anime = await _context.Animes.FindAsync(Id);
+            var anime = await _context.Animes.FirstOrDefaultAsync(a => a.Id == id);
             return anime;
         }
         public async Task<Anime> CreateAnimeAsync(Anime anime)
@@ -38,25 +31,24 @@ namespace AniList.Api.Repositories
             return anime;
         }
 
-        public async Task<bool> UpdateAnimeAsync(Anime anime)
+        public async Task UpdateAnimeAsync(Anime anime)
         {
             _context.Animes.Update(anime);
             await _context.SaveChangesAsync();
-            return true;
         }
 
-        public async Task<bool> DeleteAnimeAsync(int Id)
+        public async Task<bool> DeleteAnimeAsync(int id)
         {
-            var anime = await _context.Animes.FindAsync(Id);
+            var anime = await _context.Animes.FirstOrDefaultAsync(a => a.Id == id);
             if (anime == null) return false;
             _context.Animes.Remove(anime);
             await _context.SaveChangesAsync();
             return true;
         }
 
-        public async Task<bool> ExistAsync(int Id)
+        public async Task<bool> ExistAsync(int id)
         {
-            return await _context.Animes.AnyAsync(x => x.Id == Id);
+            return await _context.Animes.AnyAsync(x => x.Id == id);
         }
     }
 }

@@ -1,14 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using AniList.Api.data;
 using AniList.Api.DTOs;
 using AniList.Api.Interfaces;
 using AniList.Api.Models;
 using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
 
 namespace AniList.Api.Controllers
 {
@@ -25,6 +19,11 @@ namespace AniList.Api.Controllers
             _mapper = mapper;
         }
 
+        /// <summary>
+        /// Get all anime entries.
+        /// </summary>
+        /// <remarks>Returns a list of all anime in the database.</remarks>
+        /// <response code="200">Returns the list of anime</response>
         [HttpGet]
         public async Task<IActionResult> GetAllAnimes()
         {
@@ -32,11 +31,11 @@ namespace AniList.Api.Controllers
             var animeDto = _mapper.Map<List<AnimeDto>>(anime);
             return Ok(animeDto);
         }
-        [HttpGet("{Id}")]
-        public async Task<IActionResult> GetAnimeById([FromRoute] int Id)
+        [HttpGet("{id}")]
+        public async Task<IActionResult> GetAnimeById([FromRoute] int id)
         {
-            var anime = await _repository.GetByIdAsync(Id);
-            if (anime == null) return NotFound("Couldn't find your anime");
+            var anime = await _repository.GetByIdAsync(id);
+            if (anime == null) return NotFound(new { message = $"Anime with ID {id} was not found." });
             var animeDto = _mapper.Map<AnimeDto>(anime);
             return Ok(animeDto);
         }
@@ -44,34 +43,38 @@ namespace AniList.Api.Controllers
         [HttpPost]
         public async Task<IActionResult> CreateAnime([FromBody] CreateAnimeDto createDto)
         {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
             var anime = _mapper.Map<Anime>(createDto);
             var newAnime = await _repository.CreateAnimeAsync(anime);
             var animeDto = _mapper.Map<AnimeDto>(newAnime);
-            return Ok(animeDto);
+            return CreatedAtAction(nameof(GetAnimeById), new { id = newAnime.Id }, animeDto);
         }
 
-        [HttpPut("{Id}")]
-        public async Task<IActionResult> UpdateAnime([FromRoute] int Id, CreateAnimeDto createAnimeDto)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateAnime([FromRoute] int id, CreateAnimeDto createAnimeDto)
         {
-            if (!await _repository.ExistAsync(Id))
-                return NotFound($"Anime with ID {Id} was not found.");
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            if (!await _repository.ExistAsync(id))
+                return NotFound(new { message = $"Anime with ID {id} was not found." });
 
             var anime = _mapper.Map<Anime>(createAnimeDto);
-            anime.Id = Id;
+            anime.Id = id;
 
             await _repository.UpdateAnimeAsync(anime);
 
-            var animeDto = _mapper.Map<AnimeDto>(anime);
-            return Ok(animeDto);
+            return NoContent();
         }
 
-        [HttpDelete("{Id}")]
-        public async Task<IActionResult> DeleteAnime([FromRoute] int Id)
+        [HttpDelete("{id}")]
+        public async Task<IActionResult> DeleteAnime([FromRoute] int id)
         {
-            var isDeleted = await _repository.DeleteAnimeAsync(Id);
+            var isDeleted = await _repository.DeleteAnimeAsync(id);
 
             if (!isDeleted)
-                return NotFound($"Anime with ID {Id} was not found.");
+                return NotFound(new { message = $"Anime with ID {id} was not found." });
 
             return NoContent();
         }

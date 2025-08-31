@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AniList.Api")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+182bc3743c4b593169b85ab810e08e91aa553caa")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+f6d463665ad83b354e50210418741b745940801c")]
 [assembly: System.Reflection.AssemblyProductAttribute("AniList.Api")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AniList.Api")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
