@@ -16,8 +16,7 @@ namespace AniList.Api.Repositories
 
         public async Task<List<Anime>> GetAllAsync()
         {
-            var animeList = await _context.Animes.ToListAsync();
-            return animeList;
+            return await _context.Animes.ToListAsync();
         }
         public async Task<Anime?> GetByIdAsync(int id)
         {

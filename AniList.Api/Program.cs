@@ -1,6 +1,7 @@
 using AniList.Api.data;
 using AniList.Api.Interfaces;
 using AniList.Api.Mapping;
+using AniList.Api.Models;
 using AniList.Api.Repositories;
 using Microsoft.EntityFrameworkCore;
 
@@ -18,6 +19,7 @@ builder.Services.AddDbContext<AppDbContext>(options =>
  );
 
 builder.Services.AddScoped<IAnimeRepository, AnimeRepository>();
+builder.Services.AddScoped<IUserAnimeRepository, UserAnimeRepository>();
 
 var app = builder.Build();
 

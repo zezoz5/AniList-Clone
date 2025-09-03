@@ -10,6 +10,7 @@ namespace AniList.Api.data
     public class AppDbContext : DbContext
     {
         public AppDbContext(DbContextOptions<AppDbContext> options) : base(options) { }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<UserAnime>().HasKey(au => new { au.AnimeId, au.UserId });
@@ -58,13 +59,12 @@ namespace AniList.Api.data
             modelBuilder.Entity<Manga>()
             .HasMany(g => g.Genres)
             .WithMany(m => m.Mangas);
-
         }
         public DbSet<Anime> Animes { get; set; }
         public DbSet<Manga> Mangas { get; set; }
         public DbSet<Genre> Genres { get; set; }
         public DbSet<User> Users { get; set; }
-        public DbSet<UserAnime> AnimeUsers { get; set; }
-        public DbSet<UserManga> MangaUsers { get; set; }
+        public DbSet<UserAnime> UserAnimes { get; set; }
+        public DbSet<UserManga> UserMangas { get; set; }
     }
 }

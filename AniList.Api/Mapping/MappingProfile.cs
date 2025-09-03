@@ -14,6 +14,8 @@ namespace AniList.Api.Mapping
         {
             CreateMap<Anime, AnimeDto>();
             CreateMap<CreateAnimeDto, Anime>();
+            CreateMap<UserAnime, UserAnimeDto>();
+            CreateMap<AddUserAnimeDto, UserAnime>();
         }
     }
 }
