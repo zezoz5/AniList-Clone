@@ -5,9 +5,10 @@ using System.Threading.Tasks;
 
 namespace AniList.Api.DTOs
 {
-    public class AddUserAnimeDto
+    public class UserMangaDto
     {
-        public int AnimeId { get; set; }
+        public int MangaId { get; set; }
+        public string MangaTitle { get; set; } = string.Empty;
         public string Status { get; set; } = string.Empty;
         public int Progress { get; set; }
         public double Score { get; set; }

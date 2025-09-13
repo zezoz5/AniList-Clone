@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using AniList.Api.Models;
 using Microsoft.EntityFrameworkCore;
 
@@ -30,14 +26,14 @@ namespace AniList.Api.data
             // Explicit Many to Many relationship
 
             modelBuilder.Entity<UserAnime>()
-            .HasOne(ua => ua.User)
-            .WithMany(ua => ua.AnimeList)
-            .HasForeignKey(ua => ua.UserId);
-
-            modelBuilder.Entity<UserAnime>()
             .HasOne(ua => ua.Anime)
             .WithMany(ua => ua.Viewers)
             .HasForeignKey(ua => ua.AnimeId);
+
+            modelBuilder.Entity<UserAnime>()
+            .HasOne(ua => ua.User)
+            .WithMany(ua => ua.AnimeList)
+            .HasForeignKey(ua => ua.UserId);
 
             // Configure composite key for UserManga
             modelBuilder.Entity<UserManga>().HasKey(um => new { um.MangaId, um.UserId });
@@ -59,6 +55,14 @@ namespace AniList.Api.data
             modelBuilder.Entity<Manga>()
             .HasMany(g => g.Genres)
             .WithMany(m => m.Mangas);
+
+            modelBuilder.Entity<User>()
+            .HasData(new User
+            {
+                Id = 1,
+                Username = "zezoz"
+            });
+
         }
         public DbSet<Anime> Animes { get; set; }
         public DbSet<Manga> Mangas { get; set; }

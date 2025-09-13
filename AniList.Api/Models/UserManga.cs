@@ -1,8 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-
 namespace AniList.Api.Models
 {
     public class UserManga
@@ -16,6 +11,6 @@ namespace AniList.Api.Models
         // Tracking
         public string Status { get; set; } = "Planning";
         public int Progress { get; set; } = 0; // Chapters read
-        public int Score { get; set; } = 0;
+        public double Score { get; set; } = 0;
     }
 }

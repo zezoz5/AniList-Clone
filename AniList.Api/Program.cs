@@ -19,7 +19,9 @@ builder.Services.AddDbContext<AppDbContext>(options =>
  );
 
 builder.Services.AddScoped<IAnimeRepository, AnimeRepository>();
+builder.Services.AddScoped<IMangaRepository,MangaRepository>();
 builder.Services.AddScoped<IUserAnimeRepository, UserAnimeRepository>();
+builder.Services.AddScoped<IUserMangaRepository, UserMangaRepository>();
 
 var app = builder.Build();
 

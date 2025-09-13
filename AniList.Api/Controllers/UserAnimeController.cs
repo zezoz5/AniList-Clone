@@ -61,8 +61,8 @@ namespace AniList.Api.Controllers
                 return Conflict(new { message = "Anime is already in your list." });
 
             // Validate anime exists
-            var animeExist = await _animeRepository.ExistAsync(AddDto.AnimeId);
-            if (!animeExist)
+            var animeExist = await _animeRepository.GetByIdAsync(AddDto.AnimeId);
+            if (animeExist == null)
                 return BadRequest(new { message = "Anime not found" });
 
             var userAnime = _mapper.Map<UserAnime>(AddDto);
@@ -71,9 +71,38 @@ namespace AniList.Api.Controllers
             var added = await _repository.AddAsync(userAnime);
             var dto = _mapper.Map<UserAnimeDto>(added);
 
-            return CreatedAtAction(nameof(GetEntry), new { animeId = added.AnimeId, dto });
+            return CreatedAtAction(nameof(GetEntry), new { animeId = added.AnimeId }, dto);
         }
 
+        [HttpPut("{animeId}")]
+        public async Task<IActionResult> UpdateWatchlist(int animeId, [FromBody] UserAnimeUpdateDto updateDto)
+        {
+            if (!ModelState.IsValid)
+                return BadRequest(ModelState);
+
+            var userId = 1;
+
+            var entry = await _repository.GetByUserAndAnimeAsync(userId, animeId);
+            if (entry == null)
+                return NotFound(new { message = "Anime not in your list" });
+
+            _mapper.Map(updateDto, entry);
+            await _repository.UpdateAsync(entry);
+            return NoContent();
+        }
+
+        [HttpDelete("{animeId}")]
+        public async Task<IActionResult> RemoveFromWatchlist([FromRoute] int animeId)
+        {
+            int userId = 1;
+
+            var success = await _repository.DeleteAsync(userId, animeId);
+
+            if (!success)
+                return NotFound(new { message = "Anime not found in your list" });
+
+            return NoContent();
+        }
 
     }
 }

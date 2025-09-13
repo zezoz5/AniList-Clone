@@ -18,9 +18,10 @@ namespace AniList.Api.Repositories
             _context = context;
         }
 
-        public async Task<List<UserAnime>> GetByUserIdAsync(int id)
+        public async Task<List<UserAnime>> GetByUserIdAsync(int userId)
         {
-            return await _context.UserAnimes.Where(ua => ua.UserId == id).Include(ua => ua.Anime).ToListAsync();
+            return await _context.UserAnimes.Where(ua => ua.UserId == userId)
+            .Include(ua => ua.Anime).ToListAsync();
         }
 
         public async Task<UserAnime?> GetByUserAndAnimeAsync(int userId, int animeId)
@@ -34,6 +35,25 @@ namespace AniList.Api.Repositories
             await _context.UserAnimes.AddAsync(userAnime);
             await _context.SaveChangesAsync();
             return userAnime;
+        }
+
+        public async Task UpdateAsync(UserAnime userAnime)
+        {
+            _context.UserAnimes.Update(userAnime);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<bool> DeleteAsync(int userId, int animeId)
+        {
+            var anime = await _context.UserAnimes
+            .FirstOrDefaultAsync(ua => ua.AnimeId == animeId && ua.UserId == userId);
+
+            if (anime == null)
+                return false;
+
+            _context.UserAnimes.Remove(anime);
+            await _context.SaveChangesAsync();
+            return true;
         }
     }
 }

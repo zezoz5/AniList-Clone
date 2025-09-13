@@ -16,7 +16,7 @@ namespace AniList.Api.Models
         // Tracking data
         public string Status { get; set; } = "Planing"; // Watching, Completed, etc.
         public int Progress { get; set; } = 0;
-        public int Score { get; set; } = 0;
+        public double Score { get; set; } = 0;
 
     }
 }

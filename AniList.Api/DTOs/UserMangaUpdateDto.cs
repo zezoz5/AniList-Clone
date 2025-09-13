@@ -5,9 +5,8 @@ using System.Threading.Tasks;
 
 namespace AniList.Api.DTOs
 {
-    public class AddUserAnimeDto
+    public class UserMangaUpdateDto
     {
-        public int AnimeId { get; set; }
         public string Status { get; set; } = string.Empty;
         public int Progress { get; set; }
         public double Score { get; set; }

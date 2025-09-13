@@ -15,7 +15,13 @@ namespace AniList.Api.Mapping
             CreateMap<Anime, AnimeDto>();
             CreateMap<CreateAnimeDto, Anime>();
             CreateMap<UserAnime, UserAnimeDto>();
-            CreateMap<AddUserAnimeDto, UserAnime>();
+            CreateMap<UserAnime,AddUserAnimeDto>().ReverseMap();
+            CreateMap<UserAnimeUpdateDto, UserAnime>();
+            CreateMap<Manga, MangaDto>();
+            CreateMap<AddMangaDto, Manga>();
+            CreateMap<UserManga, UserMangaDto>();
+            CreateMap<UserManga, AddUserMangaDto>().ReverseMap();
+            CreateMap<UserMangaUpdateDto, UserManga>();
         }
     }
 }

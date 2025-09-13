@@ -3,6 +3,7 @@ using AniList.Api.data;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,11 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace AniList.Api.Migrations
 {
     [DbContext(typeof(AppDbContext))]
-    partial class AppDbContextModelSnapshot : ModelSnapshot
+    [Migration("20250908044039_Remove Images")]
+    partial class RemoveImages
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        /// <inheritdoc />
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -187,8 +190,8 @@ namespace AniList.Api.Migrations
                     b.Property<int>("Progress")
                         .HasColumnType("int");
 
-                    b.Property<double>("Score")
-                        .HasColumnType("float");
+                    b.Property<int>("Score")
+                        .HasColumnType("int");
 
                     b.Property<string>("Status")
                         .IsRequired()
@@ -212,8 +215,8 @@ namespace AniList.Api.Migrations
                     b.Property<int>("Progress")
                         .HasColumnType("int");
 
-                    b.Property<double>("Score")
-                        .HasColumnType("float");
+                    b.Property<int>("Score")
+                        .HasColumnType("int");
 
                     b.Property<string>("Status")
                         .IsRequired()
